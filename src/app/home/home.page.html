@@ -1,10 +1,12 @@
-<ion-header [translucent]="true" >
-  <ion-toolbar >
-    <ion-title slot="start">
-      Blank
-    </ion-title>
-    <ion-button slot="end" fill="clear" (click)="signOut()">Sign Out</ion-button>
-
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title slot="start"> Blank </ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="signOut()">Cerrar sesion</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>Agregar un nuevo producto</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -13,5 +15,21 @@
     <h1>HI</h1>
     <strong>{{email}}</strong>
   </div>
+  <section>
+    <div class="contenedor-lugar-comida">
+      <div class="contenedor-titulo">
+        <h2>Titulo de lugar de comida</h2>
+      </div>
+      <div class="contenedor-imagen">
+        <img
+          class="contendor-imagen"
+          src="https://png.pngtree.com/png-clipart/20201224/ourmid/pngtree-panda-bamboo-bamboo-shoots-simple-strokes-cartoon-with-pictures-small-fresh-png-image_2625172.jpg"
+        />
+      </div>
+      <div class="contenedor-botones-items">
+        <ion-button class="contenedor-modificar">Modificar</ion-button>
+        <ion-button class="contenedor-eliminar">Eliminar</ion-button>
+      </div>
+    </div>
+  </section>
 </ion-content>
-  
