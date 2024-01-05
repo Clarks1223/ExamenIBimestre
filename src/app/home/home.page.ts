@@ -58,6 +58,21 @@ export class HomePage implements OnInit {
       console.error('El huecaId es null o undefined en eliminarHueca.');
     }
   }
+  
+  eliminarHueca(huecaId: string) {
+    if (huecaId) {
+      this.firestore.collection('huecas').doc(huecaId).delete()
+        .then(() => {
+          console.log('Hueca eliminada con éxito');
+        })
+        .catch((error) => {
+          console.error('Error al eliminar hueca:', error);
+        });
+    } else {
+      console.error('El huecaId es null o undefined en eliminarHueca.');
+    }
+  }
+  
 
   signOut() {
     this.authService.signOut().then(() => {
