@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { SplashComponent } from './components/splash/splash.component';
 
-
 const routes: Routes = [
   {
     path: '',
@@ -37,6 +36,15 @@ const routes: Routes = [
     path: 'confirmation',
     loadChildren: () => import('./pages/confirmation/confirmation.module').then( m => m.ConfirmationPageModule)
   },
+  {
+    path: 'agregar-hueca',
+    loadChildren: () => import('./pages/agregar-hueca/agregar-hueca.module').then( m => m.AgregarHuecaPageModule)
+  },
+  {
+    path: 'editar-hueca/:id',
+    loadChildren: () => import('./pages/editar-hueca/editar-hueca.module').then( m => m.EditarHuecaPageModule)
+  },
+
 ];
 
 @NgModule({

@@ -5,7 +5,7 @@
       <ion-button fill="clear" (click)="signOut()">Cerrar sesión</ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button>Agregar un nuevo restaurante</ion-button>
+      <ion-button (click)="agregarHueca()">Agregar un nuevo restaurante</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -13,23 +13,27 @@
 <ion-content [fullscreen]="true">
   <div id="container">
     <h1>Hola </h1>
-    <strong>{{email}}</strong>
   </div>
-  <section>
-    <div class="contenedor-lugar-comida">
+  <section *ngIf="huecas.length > 0; else noHuecas">
+    <div *ngFor="let hueca of huecas" class="contenedor-lugar-comida">
       <div class="contenedor-titulo">
-        <h2>Titulo de lugar de comida</h2>
+        <h2>{{ hueca.titulo }}</h2>
       </div>
       <div class="contenedor-imagen">
-        <img
-          class="contendor-imagen"
-          src="https://png.pngtree.com/png-clipart/20201224/ourmid/pngtree-panda-bamboo-bamboo-shoots-simple-strokes-cartoon-with-pictures-small-fresh-png-image_2625172.jpg"
-        />
+        <img class="contendor-imagen" [src]="hueca.imagen" />
+      </div>
+      <div class="contenedor-descripcion">
+        <p class="desc">{{ hueca.descripcion }}</p>
       </div>
       <div class="contenedor-botones-items">
-        <ion-button class="contenedor-modificar">Modificar</ion-button>
-        <ion-button class="contenedor-eliminar">Eliminar</ion-button>
+        <ion-button class="contenedor-modificar" (click)="editarHueca(hueca.id)">Modificar</ion-button>
+        <ion-button class="contenedor-eliminar" color="danger">Eliminar</ion-button>
       </div>
     </div>
   </section>
+  <ng-template #noHuecas>
+    <div class="mensaje-huecas-vacias">
+      <h4>Aún no se han agregado huecas</h4>
+    </div>
+  </ng-template>
 </ion-content>

@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Nueva hueca</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Agregar Hueca</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-item>
+      <ion-textarea [(ngModel)]="titulo" label="Título para la hueca"></ion-textarea>
+    </ion-item>
+    <ion-img [src]="imagen || 'https://i0.wp.com/zoomempresarial.pe/wp-content/uploads/2019/10/barrio-miraflores-interior-min.jpg?resize=723%2C482&ssl=1'"></ion-img>
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="full" (click)="tomarFoto()">Tomar Foto</ion-button>
+        </ion-col>
+        <ion-col>
+          <input type="file" (change)="cargarImagen($event)" />
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-textarea [(ngModel)]="descripcion" label="Descripción"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-button expand="full" (click)="guardar()" color="success">Guardar</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="full" (click)="cancelar()" color="danger">Cancelar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
