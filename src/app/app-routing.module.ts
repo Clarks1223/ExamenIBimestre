@@ -1,14 +1,20 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { SplashComponent } from './components/splash/splash.component';
+
 
 const routes: Routes = [
+  {
+    path: '',
+    component: SplashComponent
+  },
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
   {
     path: '',
-    redirectTo: 'landing',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -26,10 +32,6 @@ const routes: Routes = [
   {
     path: 'verify',
     loadChildren: () => import('./pages/verify/verify.module').then( m => m.VerifyPageModule)
-  },
-  {
-    path: 'landing',
-    loadChildren: () => import('./pages/landing/landing.module').then( m => m.LandingPageModule)
   },
   {
     path: 'confirmation',

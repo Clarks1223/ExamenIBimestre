@@ -13,10 +13,6 @@ import { ToastController } from '@ionic/angular';
 export class LoginPage implements OnInit {
   ionicForm: FormGroup;
 
-  // email:any
-  // password:any
-  // contact:any
-
   constructor(private toastController: ToastController, private alertController: AlertController, private loadingController: LoadingController, private authService: AuthServiceService, private router: Router, public formBuilder: FormBuilder) { }
 
   ngOnInit() {
@@ -29,7 +25,6 @@ export class LoginPage implements OnInit {
         ],
       ],
       password: ['', [
-        // Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}'),
         Validators.required,
       ]
       ],
@@ -39,10 +34,8 @@ export class LoginPage implements OnInit {
   async login() {
     const loading = await this.loadingController.create();
     await loading.present();
-    // console.log(this.email + this.password);
     if (this.ionicForm.valid) {
 
-      //  await  loading.dismiss();
       const user = await this.authService.loginUser(this.ionicForm.value.email, this.ionicForm.value.password).catch((err) => {
         this.presentToast(err)
         console.log(err);

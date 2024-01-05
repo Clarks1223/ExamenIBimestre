@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <div class="header">
     <ion-title class="title" size="large">Bienvenido de nuevo</ion-title>
-    <p class="subtitle">Inicia sesion para acceder</p>
+    <p class="subtitle">Inicia sesión para acceder</p>
   </div>
   <form [formGroup]="ionicForm" novalidate>
     <div class="ion-padding">
@@ -54,21 +54,21 @@
           *ngIf="errorControl.password.errors?.pattern"
           class="errorInput"
           color="danger"
-          >La contraseña debe tener por lo menos un caracte</ion-text
+          >La contraseña debe tener por lo menos un caracter</ion-text
         >
       </div>
 
       <div class="forgotpassword">
         <a [routerLink]="['/forgot-password']" style="color: #ffc33f"
-          >Olvido su contraseña?</a
+          >Olvidó su contraseña?</a
         >
       </div>
     </div>
     <div class="signupLink">
       <p class="p">
-        Nuevo en la aplicacion?
+        Nuevo en la aplicación?
         <a [routerLink]="['/signup']" style="color: #ffc33f"
-          >Registrese ahora</a
+          >Regístrese ahora</a
         >
       </p>
     </div>
