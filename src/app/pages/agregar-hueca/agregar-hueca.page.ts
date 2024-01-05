@@ -15,8 +15,8 @@ export class AgregarHuecaPage {
   titulo: string = '';
 
   constructor(private afs: AngularFirestore,
-     private router: Router,
-     private toastController: ToastController,) {}
+    private router: Router,
+    private toastController: ToastController,) { }
 
   async tomarFoto() {
     const image = await Camera.getPhoto({
@@ -51,7 +51,7 @@ export class AgregarHuecaPage {
     }
 
     const huecaId = this.afs.createId();
-  
+
     //Guarda la información en Firestore
     this.afs.collection('huecas').doc(huecaId).set({
       id: huecaId,
@@ -59,17 +59,17 @@ export class AgregarHuecaPage {
       descripcion: this.descripcion,
       titulo: this.titulo,
     })
-    .then(() => {
-      let exitoMessage = 'Hueca guardada correctamente';
-      this.presentToast(exitoMessage);
-      this.resetValues();
-      this.router.navigate(['/home']);
-    })
-    .catch((error) => {
-      console.error('Error al guardar la hueca en Firestore:', error);
-    });
+      .then(() => {
+        let exitoMessage = 'Hueca guardada correctamente';
+        this.presentToast(exitoMessage);
+        this.resetValues();
+        this.router.navigate(['/home']);
+      })
+      .catch((error) => {
+        console.error('Error al guardar la hueca en Firestore:', error);
+      });
   }
-  
+
   camposInvalidos(): boolean {
     return !this.titulo || !this.descripcion || !this.imagen || this.imagen === 'https://i0.wp.com/zoomempresarial.pe/wp-content/uploads/2019/10/barrio-miraflores-interior-min.jpg?resize=723%2C482&ssl=1';
   }

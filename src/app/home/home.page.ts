@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from '../auth-service.service';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -15,8 +16,9 @@ export class HomePage implements OnInit {
   constructor(
     private authService: AuthServiceService,
     private router: Router,
-    private firestore: AngularFirestore
-  ) {}
+    private firestore: AngularFirestore,
+    private toastController: ToastController,
+  ) { }
 
   ngOnInit(): void {
     this.authService.getProfile().then((user) => {
@@ -38,11 +40,22 @@ export class HomePage implements OnInit {
   }
 
   editarHueca(huecaId: string) {
+    this.router.navigate(['/editar-hueca', huecaId]);
+  }
+
+  eliminarHueca(huecaId: string) {
     if (huecaId) {
-      // Realizar la navegación solo si huecaId no es null ni undefined
-      this.router.navigate(['/editarHueca', huecaId]);
+      this.firestore.collection('huecas').doc(huecaId).delete()
+        .then(() => {
+          console.log('Hueca eliminada con éxito');
+          let mensaje = 'La hueca se ha eliminado correctamente';
+          this.presentToast(mensaje);
+        })
+        .catch((error) => {
+          console.error('Error al eliminar hueca:', error);
+        });
     } else {
-      console.error('El huecaId es null o undefined en editarHueca.');
+      console.error('El huecaId es null o undefined en eliminarHueca.');
     }
   }
 
@@ -50,5 +63,15 @@ export class HomePage implements OnInit {
     this.authService.signOut().then(() => {
       this.router.navigate(['/login']);
     });
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3500,
+      position: 'bottom',
+    });
+
+    toast.present();
   }
 }

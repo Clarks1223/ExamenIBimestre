@@ -13,7 +13,7 @@
 
   <ion-card>
     <ion-item>
-      <ion-textarea label="Título para la hueca"></ion-textarea>
+      <ion-textarea label="Título para la hueca" [(ngModel)]="titulo"></ion-textarea>
     </ion-item>
     <ion-img [src]="imagen"></ion-img>
     <ion-card-content>
@@ -26,14 +26,14 @@
       <ion-row>
         <ion-col>
           <ion-item>
-            <ion-textarea label="Descripción"></ion-textarea>
+            <ion-textarea label="Descripción" [(ngModel)]="descripcion"></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col>
-          <ion-button expand="full" (click)="guardar()" color="success">Guardar</ion-button>
+          <ion-button expand="full" (click)="guardar()" color="success">Actualizar</ion-button>
         </ion-col>
         <ion-col>
           <ion-button expand="full" (click)="cancelar()" color="danger">Cancelar</ion-button>

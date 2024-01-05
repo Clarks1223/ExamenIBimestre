@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 
 @Component({
@@ -11,23 +9,17 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./editar-hueca.page.scss'],
 })
 export class EditarHuecaPage implements OnInit {
-  huecaForm: FormGroup;
   huecaId: string | null;
   imagen: string | undefined;
+  titulo: string | undefined;
+  descripcion: string | undefined;
 
   constructor(
     private route: ActivatedRoute,
-    private afs: AngularFirestore,
-    private fb: FormBuilder,
     private router: Router,
-    private toastController: ToastController,
-  ) {
-    this.huecaForm = this.fb.group({
-      titulo: ['', Validators.required],
-      descripcion: [''],
-      imagen: [''],
-    });
-  }
+    private afs: AngularFirestore,
+    private toastController: ToastController
+  ) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -39,29 +31,39 @@ export class EditarHuecaPage implements OnInit {
   cargarDatosHueca() {
     if (this.huecaId) {
       this.afs.collection('huecas').doc(this.huecaId).valueChanges().subscribe((data: any) => {
-        this.huecaForm.patchValue({
-          titulo: data.titulo,
-          descripcion: data.descripcion,
-          imagen: data.imagen,
-        });
+        if (data) {
+          this.titulo = data.titulo;
+          this.descripcion = data.descripcion;
+          this.imagen = data.imagen;
+        }
       });
     }
   }
 
   guardar() {
-    if (this.huecaForm.valid && this.huecaId) {
-      const { titulo, descripcion, imagen } = this.huecaForm.value;
-      this.afs.collection('huecas').doc(this.huecaId).update({
-        titulo: titulo,
-        descripcion: descripcion,
-        imagen: imagen,
+    if (this.camposInvalidos()) {
+      let errorMessage = 'Los campos de descripción y título no deben estar vacíos';
+      this.presentToast(errorMessage);
+      return;
+    }
+
+    if (this.huecaId) {
+      const huecaRef = this.afs.collection('huecas').doc(this.huecaId);
+
+      huecaRef.update({
+        titulo: this.titulo,
+        descripcion: this.descripcion,
+        imagen: this.imagen,
       })
-      .then(() => {
-        console.log('Hueca actualizada correctamente');
-      })
-      .catch(error => {
-        console.error('Error al actualizar la hueca:', error);
-      });
+        .then(() => {
+          console.log('Hueca actualizada correctamente');
+          let mensaje = 'La información se ha actualizado correctamente';
+          this.presentToast(mensaje);
+          this.router.navigate(['/home']);
+        })
+        .catch(error => {
+          console.error('Error al actualizar la hueca:', error);
+        });
     }
   }
 
@@ -80,6 +82,20 @@ export class EditarHuecaPage implements OnInit {
     if (file) {
       reader.readAsDataURL(file);
     }
+  }
+
+  camposInvalidos(): boolean {
+    return !this.titulo || !this.descripcion || !this.imagen;
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 3500,
+      position: 'bottom',
+    });
+
+    toast.present();
   }
 
 }
